@@ -1,4 +1,5 @@
 import { globalStyle } from "@vanilla-extract/css";
+import { navy } from "./style/palette";
 
 globalStyle(
   "html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, a, abbr, acronym, address, big, cite, code, del, dfn, em, img, ins, kbd, q, s, samp,small, strike, strong, sub, sup, tt, var, b, u, i, center, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td, article, aside, canvas, details, embed, figure, figcaption, footer, header, hgroup, menu, nav, output, ruby, section, summary, time, mark, audio, video",
@@ -12,6 +13,11 @@ globalStyle(
   }
 );
 
+globalStyle("body", {
+  backgroundColor: navy[100],
+  overflow: "hidden",
+});
+
 globalStyle(
   "article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, section",
   {
@@ -21,6 +27,8 @@ globalStyle(
 
 globalStyle("body", {
   lineHeight: 1,
+  width: "auto",
+  height: "auto",
 });
 
 globalStyle("ol, ul", {
@@ -33,4 +41,9 @@ globalStyle("blockquote, q", {
 
 globalStyle("blockquote:before, blockquote:after, q:before, q:after", {
   content: "",
+});
+
+globalStyle("a", {
+  textDecoration: "none",
+  color: "inherit",
 });
