@@ -2,11 +2,17 @@ import Link from "next/link";
 import * as styles from "./Menus.css";
 import { menus } from "../../constants/menus";
 
-export default function Menus() {
+interface PropType {
+  handleClickedNavbar: () => void;
+}
+
+export default function Menus({ handleClickedNavbar }: PropType) {
   return (
     <div className={styles.menusConatiner}>
       <div className={styles.auth}>
-        <Link href="/login">로그인</Link>
+        <Link onClick={() => handleClickedNavbar()} href="/login">
+          로그인
+        </Link>
         <Link href="/sign-in">회원가입</Link>
       </div>
       <div className={styles.items}>

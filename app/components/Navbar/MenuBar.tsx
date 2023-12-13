@@ -21,9 +21,10 @@ export default function MenuBar() {
             ? "translate(0, 0)"
             : "translateX(calc(-50vw + 30px))",
           opacity: clickedNavbar ? "1" : "0",
-        })}>
+        })}
+      >
         <div className={styles.menus}>
-          <Menus />
+          <Menus handleClickedNavbar={handleClickedNavbar} />
         </div>
       </div>
       <div
@@ -32,7 +33,8 @@ export default function MenuBar() {
           transform: clickedNavbar
             ? "translateX(calc(50vw - 30px))"
             : "translateX(0)",
-        })}>
+        })}
+      >
         <NavbarIcon
           handleClickedNavbar={handleClickedNavbar}
           clickedNavbar={clickedNavbar}

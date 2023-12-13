@@ -1,3 +1,4 @@
+import { navy } from "@/app/style/palette";
 import { style } from "@vanilla-extract/css";
 
 export const menusConatiner = style({
@@ -19,7 +20,8 @@ export const items = style({
   cursor: "pointer",
   display: "flex",
   flexDirection: "column",
-  color: "white",
+  color: "rgb(255,69,0)",
+  fontWeight: "bold",
   flex: 1,
   rowGap: 15,
   fontSize: 18,
