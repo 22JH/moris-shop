@@ -1,8 +1,7 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
-import MenuBar from "./components/Navbar/MenuBar";
-import CartIcon from "./assets/icon/CartIcon";
+import Topbar from "./components/Navbar/Topbar";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -19,8 +18,7 @@ export default function RootLayout({
   return (
     <html lang="ko-KR">
       <body className={inter.className}>
-        <MenuBar />
-        <CartIcon />
+        <Topbar />
         {children}
       </body>
     </html>

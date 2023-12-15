@@ -1,27 +1,25 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import * as styles from "./login.css";
+import { signIn, signOut } from "next-auth/react";
+import { getSession } from "next-auth/react";
 
 export default function Login() {
-  const [id, setId] = useState<string>("");
-  const [password, setPassword] = useState<string>("");
-
-  const handleId = (e: React.FocusEvent<HTMLInputElement, Element>) => {
-    setId(e.target.value);
-  };
-
-  const handlePassword = (e: React.FocusEvent<HTMLInputElement, Element>) => {
-    setPassword(e.target.value);
-  };
-
-  const handleLogin = () => {};
+  console.log();
+  useEffect(() => {
+    (async function () {
+      const session = await getSession();
+      console.log(session);
+    })();
+  }, []);
   return (
     <div className={styles.loginContainer}>
-      <input type="text" onBlur={(e) => handleId(e)} />
-      <input type="password" onBlur={(e) => handlePassword(e)} />
-
-      <button onClick={handleLogin}>로그인</button>
+      <button onClick={() => signIn("kakao")}>카카오</button>
+      <button onClick={() => signIn("google")}>구글</button>
+      <button onClick={() => signIn("naver")}>네이버</button>
+      <button onClick={() => signOut()}>로그아웃</button>
+      <button onClick={() => console.log(new Date(1702569530))}></button>
     </div>
   );
 }

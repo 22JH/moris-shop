@@ -1,5 +1,5 @@
 import { globalStyle } from "@vanilla-extract/css";
-import { navy } from "./style/palette";
+import { vars } from "./style/theme.css";
 
 globalStyle(
   "html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, a, abbr, acronym, address, big, cite, code, del, dfn, em, img, ins, kbd, q, s, samp,small, strike, strong, sub, sup, tt, var, b, u, i, center, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td, article, aside, canvas, details, embed, figure, figcaption, footer, header, hgroup, menu, nav, output, ruby, section, summary, time, mark, audio, video",
@@ -10,12 +10,14 @@ globalStyle(
     fontSize: "100%",
     font: "inherit",
     verticalAlign: "baseline",
+    boxSizing: "border-box",
   }
 );
 
 globalStyle("body", {
-  backgroundColor: navy[100],
+  backgroundColor: vars.backgroundColor.bodyColor,
   overflow: "hidden",
+  width: "100vw",
 });
 
 globalStyle(
