@@ -1,17 +1,31 @@
 "use client";
 
 import * as styles from "./Editor.css";
-
-import { useMemo, useRef, useState } from "react";
+import { useMemo, useState } from "react";
 import ReactQuill, { Quill } from "react-quill";
 import "react-quill/dist/quill.snow.css";
-import ImageResize from "quill-image-resize";
+import ImageResize from "@looop/quill-image-resize-module-react";
+import Thumbnail from "./Thumbnail";
+import ProductDescription from "./ProductDescription";
 Quill.register("modules/ImageResize", ImageResize);
 
 export default function Editor() {
-  // const QuillRef = useRef<ReactQuill>();
+  const [thumbnail, setThumbnails] = useState<(string | ArrayBuffer | null)[]>(
+    []
+  );
   const [contents, setContents] = useState("");
+  const [title, setTitle] = useState<string>("");
 
+  const addThumbanil = (uri: string | ArrayBuffer | null) => {
+    setThumbnails((prev) => [...prev, uri]);
+  };
+
+  const deleteThumbnail = (index: number) => {
+    const newThumbnails = thumbnail.filter((_, thumbnailIndex) => {
+      return index !== thumbnailIndex;
+    });
+    setThumbnails(newThumbnails);
+  };
   // const imageHandler = () => {
   // 	// 파일을 업로드 하기 위한 input 태그 생성
   //   const input = document.createElement("input");
@@ -52,12 +66,22 @@ export default function Editor() {
   //   };
   // };
 
+  const handleSubmit = () => {
+    if (!contents) {
+      alert("내용 써야지");
+      return;
+    }
+    if (!title) {
+      alert("제목 써야지");
+      return;
+    }
+  };
   const modules = useMemo(
     () => ({
       toolbar: {
         container: [
-          [{ header: [1, 2, 3, 4, 5, false] }],
-          ["bold", "italic", "underline", "strike", "blockquote"],
+          [{ header: [1, 2, 3, false] }],
+          ["bold", "italic", "underline", "strike"],
           [{ size: ["small", false, "large", "huge"] }, { color: [] }],
 
           [
@@ -81,12 +105,25 @@ export default function Editor() {
 
   return (
     <div className={styles.editorContainer}>
-      <ReactQuill
-        style={{ width: "800px", height: "600px" }}
-        modules={modules}
-        className={styles.editorStyle}
-        onChange={setContents}
-      />
+      <div className={styles.inner}>
+        <div className={styles.productDetail}>
+          <Thumbnail
+            addThumbanil={addThumbanil}
+            thumbnail={thumbnail}
+            deleteThumbnail={deleteThumbnail}
+          />
+          <ProductDescription />
+        </div>
+        <ReactQuill
+          modules={modules}
+          className={styles.editorStyle}
+          onChange={setContents}
+        />
+        <button className={styles.submitBtn} onClick={() => handleSubmit()}>
+          등록하기
+        </button>
+        <button>미리보기</button>
+      </div>
     </div>
   );
 }

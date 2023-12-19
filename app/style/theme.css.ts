@@ -14,6 +14,10 @@ export const vars = createGlobalTheme(":root", {
       mobile: "60px",
     },
   },
+  mediaQuery: {
+    mobile: "576px",
+    tablet: "768px",
+  },
 });
 
 // export const orange = {

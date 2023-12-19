@@ -16,8 +16,9 @@ globalStyle(
 
 globalStyle("body", {
   backgroundColor: vars.backgroundColor.bodyColor,
-  overflow: "hidden",
   width: "100vw",
+  lineHeight: 1,
+  height: "auto",
 });
 
 globalStyle(
@@ -26,12 +27,6 @@ globalStyle(
     display: "block",
   }
 );
-
-globalStyle("body", {
-  lineHeight: 1,
-  width: "auto",
-  height: "auto",
-});
 
 globalStyle("ol, ul", {
   listStyle: "none",
@@ -48,4 +43,11 @@ globalStyle("blockquote:before, blockquote:after, q:before, q:after", {
 globalStyle("a", {
   textDecoration: "none",
   color: "inherit",
+});
+
+globalStyle("input", {
+  margin: 0,
+  padding: 0,
+  border: 0,
+  boxSizing: "border-box",
 });

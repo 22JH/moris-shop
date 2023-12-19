@@ -1,5 +1,4 @@
 import { style } from "@vanilla-extract/css";
-import { vars } from "../../style/theme.css";
 
 export const icon = style({
   position: "absolute",
@@ -13,4 +12,9 @@ export const TopbarContainer = style({
   width: "100vw",
   height: 80,
   transition: "all 0.4s",
+  "@media": {
+    "(max-width: 574px)": {
+      height: 60,
+    },
+  },
 });
