@@ -14,12 +14,19 @@ export const inner = style({
   display: "flex",
   alignItems: "center",
   flexDirection: "column",
+  "@media": {
+    "(max-width: 574px)": {
+      width: "100%",
+    },
+  },
 });
 
 export const productDetail = style({
   width: "100%",
   display: "flex",
-  height: 600,
+  flexWrap: "wrap",
+  flexDirection: "row",
+  height: "auto",
   columnGap: 10,
 });
 

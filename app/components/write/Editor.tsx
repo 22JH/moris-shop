@@ -13,8 +13,10 @@ export default function Editor() {
   const [thumbnail, setThumbnails] = useState<(string | ArrayBuffer | null)[]>(
     []
   );
-  const [contents, setContents] = useState("");
+  const [contents, setContents] = useState<string>("");
   const [title, setTitle] = useState<string>("");
+  const [description, setDescription] = useState<string>("");
+  const [price, setPrice] = useState<number>(0);
 
   const addThumbanil = (uri: string | ArrayBuffer | null) => {
     setThumbnails((prev) => [...prev, uri]);
@@ -25,6 +27,20 @@ export default function Editor() {
       return index !== thumbnailIndex;
     });
     setThumbnails(newThumbnails);
+  };
+
+  const handleTitle = (e: React.FocusEvent<HTMLInputElement, Element>) => {
+    setTitle(e.target.value);
+  };
+
+  const handleDescription = (
+    e: React.FocusEvent<HTMLInputElement, Element>
+  ) => {
+    setDescription(e.target.value);
+  };
+
+  const handlePrice = (e: React.FocusEvent<HTMLInputElement, Element>) => {
+    setPrice(Number(e.target.value));
   };
   // const imageHandler = () => {
   // 	// 파일을 업로드 하기 위한 input 태그 생성
@@ -67,12 +83,12 @@ export default function Editor() {
   // };
 
   const handleSubmit = () => {
-    if (!contents) {
-      alert("내용 써야지");
+    if (!(title && price && description)) {
+      alert("다 채워야지?");
       return;
     }
-    if (!title) {
-      alert("제목 써야지");
+    if (!contents) {
+      alert("내용 써야지?");
       return;
     }
   };
@@ -112,7 +128,11 @@ export default function Editor() {
             thumbnail={thumbnail}
             deleteThumbnail={deleteThumbnail}
           />
-          <ProductDescription />
+          <ProductDescription
+            handlTitle={handleTitle}
+            handlePrice={handlePrice}
+            handleDescription={handleDescription}
+          />
         </div>
         <ReactQuill
           modules={modules}

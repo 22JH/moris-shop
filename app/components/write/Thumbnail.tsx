@@ -46,10 +46,16 @@ export default function Thumbnail({
           {thumbnail.map((uri: string | null | ArrayBuffer, index: number) => {
             return (
               <div className={styles.thumbnail} key={uri as string}>
-                <Image src={uri as string} alt="thumnail" fill={true} />
+                <Image
+                  src={uri as string}
+                  alt="thumnail"
+                  fill={true}
+                  style={{ objectFit: "contain" }}
+                />
                 <div
                   className={styles.deleteButtonFrame}
-                  onClick={() => deleteThumbnail(index)}>
+                  onClick={() => deleteThumbnail(index)}
+                >
                   <DeleteIcon />
                 </div>
               </div>
