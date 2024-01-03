@@ -1,9 +1,6 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
 import "./globals.css";
 import Topbar from "./components/Navbar/Topbar";
-
-const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
   title: "Morris Shop",
@@ -12,12 +9,14 @@ export const metadata: Metadata = {
 
 export default function RootLayout({
   children,
+  types,
 }: {
   children: React.ReactNode;
+  types: React.ReactNode;
 }) {
   return (
     <html lang="ko-KR">
-      <body className={inter.className}>
+      <body>
         <Topbar />
         {children}
       </body>
