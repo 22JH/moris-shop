@@ -1,7 +1,7 @@
 import mongoose from "mongoose";
 
 const itemSchema = new mongoose.Schema({
-  thumbnail: {
+  thumbnails: {
     type: [String],
     required: true,
   },
@@ -13,11 +13,15 @@ const itemSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  category: {
+    type: String,
+    required: true,
+  },
   price: {
     type: Number,
     required: true,
   },
-  content: {
+  contents: {
     type: String,
     required: true,
   },
@@ -26,7 +30,8 @@ const itemSchema = new mongoose.Schema({
     default: false,
   },
   createdAt: {
-    default: Date.now(),
+    type: Date,
+    default: Date.now,
   },
 });
 

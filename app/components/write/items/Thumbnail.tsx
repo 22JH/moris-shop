@@ -10,11 +10,11 @@ import ThumbnailCrop from "./ThumbnailCrop";
 interface ThumbnailProps {
   addThumbanil: (uri: string | ArrayBuffer | null) => void;
   deleteThumbnail: (index: number) => void;
-  thumbnail: (string | ArrayBuffer | null)[];
+  thumbnails: (string | ArrayBuffer | null)[];
 }
 
 export default function Thumbnail({
-  thumbnail,
+  thumbnails,
   addThumbanil,
   deleteThumbnail,
 }: ThumbnailProps) {
@@ -43,7 +43,7 @@ export default function Thumbnail({
     <div className={styles.thumbnailContainer}>
       <div className={styles.carousel} ref={emblaRef}>
         <div className={styles.thumbnails}>
-          {thumbnail.map((uri: string | null | ArrayBuffer, index: number) => {
+          {thumbnails.map((uri: string | null | ArrayBuffer, index: number) => {
             return (
               <div className={styles.thumbnail} key={uri as string}>
                 <Image
@@ -54,8 +54,7 @@ export default function Thumbnail({
                 />
                 <div
                   className={styles.deleteButtonFrame}
-                  onClick={() => deleteThumbnail(index)}
-                >
+                  onClick={() => deleteThumbnail(index)}>
                   <DeleteIcon />
                 </div>
               </div>

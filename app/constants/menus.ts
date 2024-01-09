@@ -1,6 +1,6 @@
 export const menus = [
   {
-    category: "All",
+    category: "ALL",
     url: "",
   },
   { category: "OUTER", url: "" },

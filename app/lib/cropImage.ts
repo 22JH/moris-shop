@@ -13,7 +13,7 @@ export default async function getCroppedImg(
   imageSrc: string,
   pixelCrop: Area,
   flip = { horizontal: false, vertical: false }
-) {
+): Promise<string | null> {
   const image: any = await createImage(imageSrc);
   const canvas = document.createElement("canvas");
   const ctx = canvas.getContext("2d");
@@ -62,7 +62,7 @@ export default async function getCroppedImg(
   // As Base64 string
   return croppedCanvas.toDataURL("image/jpeg");
 
-  // As a blob
+  // // As a blob
   // return new Promise((resolve, reject) => {
   //   croppedCanvas.toBlob((file) => {
   //     resolve(URL.createObjectURL(file!));

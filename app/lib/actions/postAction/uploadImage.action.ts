@@ -1,7 +1,7 @@
 import { getDownloadURL, getStorage, ref, uploadBytes } from "firebase/storage";
 import { initializeApp } from "firebase/app";
 
-export async function uploadImage(blob: File): Promise<string> {
+export async function uploadImage(blob: File | Blob): Promise<string> {
   try {
     const firebaseConfig = {
       apiKey: process.env.NEXT_PUBLIC_FIREBASE_APIKEY,

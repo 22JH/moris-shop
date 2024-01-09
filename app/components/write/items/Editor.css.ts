@@ -54,7 +54,11 @@ export const editorStyle = style({
 });
 
 export const submitBtn = style({
-  position: "absolute",
+  position: "fixed",
+  border: "1px solid black",
+  height: 50,
+  width: 50,
+  borderRadius: "50%",
   bottom: 50,
   right: 50,
 });

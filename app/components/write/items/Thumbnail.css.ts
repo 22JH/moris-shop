@@ -50,8 +50,8 @@ export const deleteButtonFrame = style({
 
 export const addThumbnailButtonFrame = style({
   flex: "0 0 100%",
-  width: "100%",
-  height: "100%",
+  // width: "100%",
+  // height: "100%",
   display: "flex",
   justifyContent: "center",
   alignItems: "center",

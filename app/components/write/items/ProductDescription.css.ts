@@ -24,9 +24,21 @@ export const productTitle = style({
 });
 export const productDescription = style({
   width: "100%",
+  resize: "none",
   height: 30,
 });
 export const productPrice = style({
   display: "flex",
   columnGap: 5,
+});
+
+export const productPriceInput = style({
+  "::-webkit-outer-spin-button": {
+    WebkitAppearance: "none",
+    margin: 0,
+  },
+  "::-webkit-inner-spin-button": {
+    WebkitAppearance: "none",
+    margin: 0,
+  },
 });
