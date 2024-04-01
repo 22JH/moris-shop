@@ -11,7 +11,7 @@ export const TopbarContainer = style({
   position: "relative",
   width: "100vw",
   height: 80,
-  transition: "all 0.4s",
+  transition: "transform 0.4s",
   "@media": {
     "(max-width: 574px)": {
       height: 60,

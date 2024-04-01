@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import "./globals.css";
-import Topbar from "./components/Navbar/Topbar";
+import Topbar from "./components/navbar/Topbar";
 
 export const metadata: Metadata = {
   title: "Morris Shop",

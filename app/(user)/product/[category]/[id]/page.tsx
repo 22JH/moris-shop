@@ -1,4 +1,6 @@
+import ProductDetailInfo from "@/app/components/product/productDetail/ProductDetailInfo";
 import { getItem } from "@/app/lib/actions/postAction/post.action";
+import * as styles from "./productDetails.css";
 
 interface ProductDeatilProps {
   params: {
@@ -11,11 +13,9 @@ export default async function ProductDetail({ params }: ProductDeatilProps) {
   const id = params.id.split("-")[0];
   const item = await getItem({ id });
   return (
+    // <div className={styles.productDetailFrame}>
     <div>
-      <h1>상품명 : {item.title}</h1>
-      <h2>상품 설명 : {item.description}</h2>
-      <h2>가격 : {item.price}</h2>
-      <h2>카테고리 : {item.category}</h2>
+      <ProductDetailInfo item={item} />
       <div dangerouslySetInnerHTML={{ __html: item.contents }} />
     </div>
   );

@@ -35,7 +35,7 @@ export default function Menus({
           {menus.map((menu) => {
             return (
               <Link
-                href={`/product/${menu.category}?page=1`}
+                href={menu.url}
                 key={menu.category}
                 className={styles.item}
                 onClick={() => handleClickedNavbar()}>

@@ -1,6 +1,7 @@
 import ItemList from "@/app/components/product/ItemList";
 import * as styles from "./product.css";
 import { getItemByCategory } from "@/app/lib/actions/postAction/post.action";
+import Categories from "@/app/components/product/Categories";
 
 interface ProductProps {
   params: {
@@ -18,7 +19,7 @@ export default async function Product({ params, searchParams }: ProductProps) {
   });
   return (
     <div className={styles.productContainer}>
-      <h1>{category}</h1>
+      <Categories currentCategory={category} />
       <ItemList items={items} />
     </div>
   );
