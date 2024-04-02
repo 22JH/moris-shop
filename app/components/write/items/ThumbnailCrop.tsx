@@ -1,4 +1,4 @@
-import getCroppedImg from "@/app/lib/cropImage";
+import getCroppedImg from "@/app/lib/utils/cropImage";
 import * as styles from "./ThumbnailCrop.css";
 import { useState } from "react";
 import Cropper, { Area } from "react-easy-crop";

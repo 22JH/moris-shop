@@ -7,8 +7,8 @@ import "react-quill/dist/quill.snow.css";
 import ImageResize from "@looop/quill-image-resize-module-react";
 import Thumbnail from "./Thumbnail";
 import ProductDescription from "./ProductDescription";
-import { uploadImage } from "@/app/lib/actions/postAction/uploadImage.action";
-import { createItem } from "@/app/lib/actions/postAction/post.action";
+import { uploadImage } from "@/app/lib/actions/itemsAction/uploadImage.action";
+import { createItem } from "@/app/lib/actions/itemsAction/items.action";
 Quill.register("modules/ImageResize", ImageResize);
 
 export default function Editor() {

@@ -11,6 +11,7 @@ export const leftSidebarContainer = style({
   zIndex: 2,
   transition: "0.4s all",
   top: 0,
+  padding: "50px 0 0 20px",
 });
 
 export const closeButton = style({

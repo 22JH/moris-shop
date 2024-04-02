@@ -1,6 +1,9 @@
 import mongoose from "mongoose";
 
 const userSchema = new mongoose.Schema({
+  id: {
+    type: String,
+  },
   name: {
     type: String,
   },
@@ -18,6 +21,9 @@ const userSchema = new mongoose.Schema({
   },
   address: {
     type: String,
+  },
+  wishList: {
+    type: [String],
   },
 });
 

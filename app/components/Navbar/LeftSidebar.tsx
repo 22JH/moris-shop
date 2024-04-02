@@ -20,11 +20,6 @@ export default function Menus({
           opacity: clickedNavbar ? "100%" : "0%",
           transform: clickedNavbar ? "translateX(0)" : "translateX(-100vw)",
         })}>
-        <button
-          onClick={() => handleClickedNavbar()}
-          className={styles.closeButton}>
-          close
-        </button>
         <div className={styles.auth}>
           <Link onClick={() => handleClickedNavbar()} href="/login">
             로그인

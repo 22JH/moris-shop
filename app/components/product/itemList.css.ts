@@ -9,7 +9,7 @@ export const itemsListFrame = style({
   padding: "0 10px",
   marginTop: 20,
   columnGap: 20,
-  rowGap: 50,
+  rowGap: 30,
 });
 
 export const itemFrame = style({
@@ -31,15 +31,17 @@ export const itemImage = style({
   position: "relative",
   aspectRatio: "1 / 1",
   border: "1px solid grey",
+  marginBottom: 5,
 });
 
 export const itemTitle = style({
-  fontSize: 18,
-  fontWeight: 600,
+  fontSize: 14,
 });
 
 export const itemDescription = style({
-  fontSize: 16,
+  fontSize: 14,
 });
 
-export const itemPrice = style({});
+export const itemPrice = style({
+  fontSize: 13,
+});

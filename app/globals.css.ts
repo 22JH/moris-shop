@@ -17,7 +17,6 @@ globalStyle(
 globalStyle("body", {
   backgroundColor: vars.backgroundColor.bodyColor,
   width: "100vw",
-  lineHeight: 1,
   height: "auto",
 });
 

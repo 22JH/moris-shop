@@ -6,7 +6,6 @@ import { signIn, signOut } from "next-auth/react";
 import { getSession } from "next-auth/react";
 
 export default function Login() {
-  console.log();
   useEffect(() => {
     (async function () {
       const session = await getSession();

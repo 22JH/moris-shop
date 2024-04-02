@@ -1,5 +1,5 @@
 import * as styles from "./itemList.css";
-import { titleToUrl } from "@/app/lib/changeKrUrl";
+import { titleToUrl } from "@/app/lib/utils/changeKrUrl";
 import { ItemType } from "@/app/types/ItemType";
 import Image from "next/image";
 import Link from "next/link";
@@ -24,7 +24,9 @@ export default function ItemList({ items }: { items: ItemType[] }) {
             </section>
             <h2 className={styles.itemTitle}>{item.title}</h2>
             <p className={styles.itemDescription}>{item.description}</p>
-            <p className={styles.itemPrice}>{item.price}원</p>
+            <p className={styles.itemPrice}>
+              ₩{item.price.toLocaleString("ko-KR")}
+            </p>
           </Link>
         );
       })}
@@ -45,7 +47,9 @@ export default function ItemList({ items }: { items: ItemType[] }) {
             </section>
             <h2 className={styles.itemTitle}>{item.title}</h2>
             <p className={styles.itemDescription}>{item.description}</p>
-            <p className={styles.itemPrice}>{item.price}원</p>
+            <p className={styles.itemPrice}>
+              ₩{item.price.toLocaleString("ko-KR")}
+            </p>
           </Link>
         );
       })}

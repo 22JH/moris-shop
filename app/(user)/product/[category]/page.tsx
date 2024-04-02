@@ -1,6 +1,6 @@
 import ItemList from "@/app/components/product/ItemList";
 import * as styles from "./product.css";
-import { getItemByCategory } from "@/app/lib/actions/postAction/post.action";
+import { getItemByCategory } from "@/app/lib/actions/itemsAction/items.action";
 import Categories from "@/app/components/product/Categories";
 
 interface ProductProps {

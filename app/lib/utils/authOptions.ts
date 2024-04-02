@@ -31,6 +31,7 @@ export const authOptions: AuthOptions = {
         token.user = {};
         token.user.name = user?.name;
         token.user.email = user?.email;
+        token.user.id = user?.id;
         if (user.email === "toitoii080@nate.com" || user.role == "admin") {
           token.user.role = "admin";
         }
@@ -45,4 +46,5 @@ export const authOptions: AuthOptions = {
   session: {
     maxAge: 24 * 60 * 60, // 1일
   },
+  secret: "qwer1234",
 };

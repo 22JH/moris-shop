@@ -1,10 +1,12 @@
 import { style } from "@vanilla-extract/css";
 
 export const categoriesFrame = style({
-  width: "100vw",
   display: "flex",
   justifyContent: "center",
   columnGap: 20,
-  border: "1px solid black",
+  borderTopWidth: 1,
+  borderBottomWidth: 1,
+  borderStyle: "solid",
+  borderColor: "black",
   padding: "20px 0",
 });

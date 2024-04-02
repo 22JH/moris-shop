@@ -3,7 +3,6 @@
 import { ItemType } from "@/app/types/ItemType";
 import Item from "../../models/item.model";
 import { connectToDB } from "@/app/lib/mongoose";
-import { connect } from "http2";
 
 interface GetItemType {
   category: string;
@@ -19,7 +18,6 @@ export async function createItem({
   title,
 }: ItemType) {
   try {
-    console.log(thumbnails);
     connectToDB();
     await Item.create({
       contents,
