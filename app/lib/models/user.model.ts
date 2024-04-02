@@ -1,4 +1,4 @@
-import mongoose from "mongoose";
+import mongoose, { ObjectId } from "mongoose";
 
 const userSchema = new mongoose.Schema({
   id: {
@@ -22,9 +22,12 @@ const userSchema = new mongoose.Schema({
   address: {
     type: String,
   },
-  wishList: {
-    type: [String],
-  },
+  wishList: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Item",
+    },
+  ],
 });
 
 const User = mongoose.models.User || mongoose.model("User", userSchema);

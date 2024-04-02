@@ -5,8 +5,11 @@ import { connectToDB } from "../../mongoose";
 import { getServerSession } from "next-auth";
 import { authOptions } from "../../utils/authOptions";
 import { redirect } from "next/navigation";
+import mongoose from "mongoose";
+import { UserType } from "@/app/types/UserType";
+import { ItemType } from "@/app/types/ItemType";
 
-export async function addWishList(item: string) {
+export async function addWishList(item: mongoose.Schema.Types.ObjectId) {
   try {
     connectToDB();
     const userSession = await getServerSession(authOptions);
@@ -14,9 +17,7 @@ export async function addWishList(item: string) {
      *  try문에서 redirect가 일어나도 catch의 throw가 잡힌다. */
     if (!userSession) throw new Error("user not-found");
     await User.findOneAndUpdate(
-      {
-        _id: userSession?.user?.id,
-      },
+      { email: userSession.user.email },
       { $addToSet: { wishList: item } }
     );
   } catch (err: any) {
@@ -25,7 +26,7 @@ export async function addWishList(item: string) {
   }
 }
 
-export async function getWishList() {
+export async function getWishList(): Promise<ItemType[] | undefined> {
   try {
     connectToDB();
     const userSession = await getServerSession(authOptions);
@@ -33,7 +34,12 @@ export async function getWishList() {
      *  try문에서 redirect가 일어나도 catch의 throw가 잡힌다. */
     if (!userSession) throw new Error("user not-found");
 
-    // const items = await User.findById
+    const res = (await User.findOne({ email: userSession.user.email })
+      .populate("wishList", { _id: -1, thumbnails: 1, title: 1, price: 1 }) // 'wishList' 필드를 populate하여 Item의 상세 정보를 가져옴
+      .select("wishList")
+      .lean()
+      .exec()) as UserType;
+    return res.wishList;
   } catch (err: any) {
     if (err.message === "user not-found") return redirect("/login");
     throw new Error(`장바구니 목록 가져오기 실패 : ${err}`);

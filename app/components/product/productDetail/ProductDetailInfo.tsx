@@ -15,7 +15,7 @@ export default function ProductDetailInfo({ item }: ProductThumbnailsProps) {
   const { showPopup, renderPopup } = usePopup();
   const handleWishClick = async () => {
     saveToWishlist(item._id!.toString());
-    addWishList(item._id!.toString());
+    addWishList(item._id!);
     showPopup(<p>장바구니에 추가했습니다.</p>, 2000);
   };
   return (

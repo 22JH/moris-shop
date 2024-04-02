@@ -7,7 +7,6 @@ export async function createUser({ name, phone, email }: any) {
   try {
     connectToDB();
     const isUserExist = await User.findOne({ email });
-    console.log(isUserExist);
     if (!isUserExist) {
       User.create({ name, phone, email });
     }

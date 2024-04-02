@@ -1,7 +1,7 @@
-import ItemList from "@/app/components/product/ItemList";
+import ItemList from "@/app/components/product/itemList/ItemList";
 import * as styles from "./product.css";
 import { getItemByCategory } from "@/app/lib/actions/itemsAction/items.action";
-import Categories from "@/app/components/product/Categories";
+import Categories from "@/app/components/product/itemList/Categories";
 
 interface ProductProps {
   params: {

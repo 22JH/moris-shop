@@ -26,7 +26,7 @@ export const authOptions: AuthOptions = {
       await createUser(user);
       return true;
     },
-    async jwt({ token, user }: any) {
+    async jwt({ token, user, profile }: any) {
       if (user) {
         token.user = {};
         token.user.name = user?.name;

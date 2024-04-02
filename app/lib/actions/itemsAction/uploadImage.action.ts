@@ -21,7 +21,6 @@ export async function uploadImage(blob: File | Blob): Promise<string> {
 
     return url;
   } catch (err: any) {
-    console.error(`파이어베이스 이미지 업로드/다운로드 실패: ${err.message}`);
-    throw err;
+    throw new Error(`파이어베이스 이미지 업로드/다운로드 실패: ${err.message}`);
   }
 }
