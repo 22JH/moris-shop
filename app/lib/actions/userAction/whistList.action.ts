@@ -6,8 +6,7 @@ import { getServerSession } from "next-auth";
 import { authOptions } from "../../utils/authOptions";
 import { redirect } from "next/navigation";
 import mongoose from "mongoose";
-import { UserType } from "@/app/types/UserType";
-import { ItemType } from "@/app/types/ItemType";
+import { UserType, WishListType } from "@/app/types/UserType";
 
 export async function addWishList(item: mongoose.Schema.Types.ObjectId) {
   try {
@@ -26,7 +25,7 @@ export async function addWishList(item: mongoose.Schema.Types.ObjectId) {
   }
 }
 
-export async function getWishList(): Promise<ItemType[] | undefined> {
+export async function getWishList(): Promise<WishListType | undefined> {
   try {
     connectToDB();
     const userSession = await getServerSession(authOptions);
@@ -35,7 +34,13 @@ export async function getWishList(): Promise<ItemType[] | undefined> {
     if (!userSession) throw new Error("user not-found");
 
     const res = (await User.findOne({ email: userSession.user.email })
-      .populate("wishList", { _id: -1, thumbnails: 1, title: 1, price: 1 }) // 'wishList' 필드를 populate하여 Item의 상세 정보를 가져옴
+      .populate("wishList", {
+        _id: -1,
+        thumbnails: 1,
+        title: 1,
+        price: 1,
+        category: 1,
+      }) // 'wishList' 필드를 populate하여 Item의 상세 정보를 가져옴
       .select("wishList")
       .lean()
       .exec()) as UserType;

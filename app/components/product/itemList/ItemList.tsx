@@ -8,10 +8,10 @@ export default function ItemList({ items }: { items: ItemType[] }) {
   return (
     <section className={styles.itemsListFrame}>
       {items.map((item, idx) => {
-        const url = titleToUrl(item.title);
+        const _url = titleToUrl(item.title);
         return (
           <Link
-            href={`/product/${item.category}/${item._id}-${url}`}
+            href={`/product/${item.category}/${item._id}-${_url}`}
             key={item.title + idx}
             className={styles.itemFrame}>
             <section className={styles.itemImage}>

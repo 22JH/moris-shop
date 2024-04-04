@@ -22,10 +22,19 @@ const userSchema = new mongoose.Schema({
   address: {
     type: String,
   },
+  /**
+   *  장바구니 : {
+   *    item : 아이템 정보,
+   *    isOrderPending : 주문 진행사항까지 갔는지
+   *  }
+   */
   wishList: [
     {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "Item",
+      item: { type: mongoose.Schema.Types.ObjectId, ref: "Item" },
+      isOrderPending: {
+        type: Boolean,
+        default: false,
+      },
     },
   ],
 });
