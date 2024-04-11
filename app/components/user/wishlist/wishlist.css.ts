@@ -4,24 +4,13 @@ import { style } from "@vanilla-extract/css";
  * 전체 프레임
  */
 export const wishListFrame = style({
-  position: "absolute",
   display: "flex",
   flexDirection: "column",
   rowGap: 20,
-  top: "50%",
-  left: "50%",
-  transform: "translate(-50%, -50%)",
   width: "100%",
   margin: "0 15px",
   maxWidth: 890,
   minWidth: 310,
-});
-
-/**
- * 페이지 제목 ('Shopping Bag')
- */
-export const wishListTitle = style({
-  fontSize: 20,
 });
 
 /**

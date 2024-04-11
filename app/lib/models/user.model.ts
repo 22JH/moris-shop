@@ -28,15 +28,14 @@ const userSchema = new mongoose.Schema({
    *    isOrderPending : 주문 진행사항까지 갔는지
    *  }
    */
-  wishList: [
-    {
-      item: { type: mongoose.Schema.Types.ObjectId, ref: "Item" },
-      isOrderPending: {
-        type: Boolean,
-        default: false,
-      },
-    },
-  ],
+  wishList: {
+    type: [mongoose.Schema.Types.ObjectId],
+    ref: "Item",
+  },
+  orderInProgress: {
+    type: [mongoose.Schema.Types.ObjectId],
+    ref: "Item",
+  },
 });
 
 const User = mongoose.models.User || mongoose.model("User", userSchema);

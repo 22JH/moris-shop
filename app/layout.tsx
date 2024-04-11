@@ -9,10 +9,8 @@ export const metadata: Metadata = {
 
 export default function RootLayout({
   children,
-  types,
 }: {
   children: React.ReactNode;
-  types: React.ReactNode;
 }) {
   return (
     <html lang="ko-KR">

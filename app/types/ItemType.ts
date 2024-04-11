@@ -1,7 +1,7 @@
-import mongoose, { Date } from "mongoose";
+import type { ObjectId, Date } from "mongoose";
 
 export interface ItemType {
-  _id?: mongoose.Schema.Types.ObjectId;
+  _id?: ObjectId;
   thumbnails: (string | ArrayBuffer | null)[];
   title: string;
   description: string;

@@ -5,8 +5,16 @@ export const vars = createGlobalTheme(":root", {
     bodyColor: "rgb(175, 204, 180)",
     pointColor: "rgb(50, 82, 56)",
   },
-  fontColor: {
-    accentColor: "rgb(255 ,69 ,0)",
+  font: {
+    size: {
+      small: "12px",
+      medium: "16px",
+      large: "20px",
+      xLarge: "24px",
+    },
+    color: {
+      accentColor: "rgb(255 ,69 ,0)",
+    },
   },
   size: {
     navbarHeight: {

@@ -4,7 +4,6 @@ import usePopup from "@/app/lib/hooks/usePopup";
 import Thumbnails from "./Thumbnails";
 import * as styles from "./productDetailInfo.css";
 import { ItemType } from "@/app/types/ItemType";
-import { saveToWishlist } from "@/app/lib/utils/saveLocalStorage";
 import { addWishList } from "@/app/lib/actions/userAction/whistList.action";
 
 interface ProductThumbnailsProps {
@@ -14,7 +13,8 @@ interface ProductThumbnailsProps {
 export default function ProductDetailInfo({ item }: ProductThumbnailsProps) {
   const { showPopup, renderPopup } = usePopup();
   const handleWishClick = async () => {
-    saveToWishlist(item._id!.toString());
+    // saveToWishlist(item._id!.toString());
+    // console.log(item._id);
     addWishList(item._id!);
     showPopup(<p>장바구니에 추가했습니다.</p>, 2000);
   };

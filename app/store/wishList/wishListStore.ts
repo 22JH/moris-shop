@@ -1,6 +1,5 @@
 import { create } from "zustand";
 import type { ObjectId } from "mongoose";
-import type { WishListType } from "@/app/types/UserType";
 
 interface WishListStoreType {
   selectedItems: ObjectId[];

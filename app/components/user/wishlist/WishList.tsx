@@ -4,46 +4,50 @@ import * as styles from "./wishlist.css";
 import Image from "next/image";
 import { titleToUrl } from "@/app/lib/utils/changeKrUrl";
 import Link from "next/link";
-import { useState } from "react";
 import type { ObjectId } from "mongoose";
-import { WishListType } from "@/app/types/UserType";
+import type { ItemType } from "@/app/types/ItemType";
+import useWishListStore from "@/app/store/wishList/wishListStore";
 
 export default function WishList({
   wishList,
 }: {
-  wishList: WishListType | undefined;
+  wishList: ItemType[] | undefined;
 }) {
   if (!wishList) return <p>장바구니가 비었습니다.</p>;
 
-  const [selectedItems, setSelectedItems] = useState<ObjectId[]>([]);
-
+  const { selectedItems, setSelectedItems } = useWishListStore();
   const toggleItemSelection = (id: ObjectId) => {
-    setSelectedItems((prev) =>
-      prev.includes(id) ? prev.filter((itemId) => itemId !== id) : [...prev, id]
+    const isSelected = selectedItems.some(
+      (itemId) => itemId.toString() === id.toString()
+    );
+
+    setSelectedItems(
+      isSelected
+        ? selectedItems.filter((itemId) => itemId.toString() !== id.toString())
+        : [...selectedItems, id]
     );
   };
 
   const toggleSelectAll = (isChecked: boolean) => {
     if (isChecked) {
-      setSelectedItems(wishList.item.map((item) => item._id!) || []);
+      setSelectedItems(wishList.map((wishItem) => wishItem._id!) || []);
     } else {
       setSelectedItems([]);
     }
   };
 
-  console.log(selectedItems);
+  if (!wishList) return <p>아이템이 없습니다.</p>;
   return (
     <section className={styles.wishListFrame}>
-      <h1 className={styles.wishListTitle}>Shopping Bag</h1>
       <div>
         <input
           type="checkbox"
           onChange={(e) => toggleSelectAll(e.target.checked)}
-          checked={wishList && wishList.item.length === selectedItems.length}
+          checked={wishList.length === selectedItems.length}
         />
       </div>
       <section className={styles.wishListItems}>
-        {wishList.item.map((wishItem) => {
+        {wishList.map((wishItem) => {
           const _url = titleToUrl(wishItem.title);
           return (
             <section

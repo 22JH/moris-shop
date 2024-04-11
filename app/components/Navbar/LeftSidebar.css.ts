@@ -38,7 +38,7 @@ export const items = style({
 
 export const item = style({
   cursor: "pointer",
-  color: vars.fontColor.accentColor,
+  color: vars.font.color.accentColor,
   width: "fit-content",
 });
 
