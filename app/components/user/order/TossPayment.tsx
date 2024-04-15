@@ -1,42 +1,81 @@
-import {
-  ANONYMOUS,
-  loadPaymentWidget,
-  type PaymentWidgetInstance,
-} from "@tosspayments/payment-widget-sdk";
-import { useEffect, useRef } from "react";
+import { type PaymentWidgetInstance } from "@tosspayments/payment-widget-sdk";
+import { useEffect, useRef, useState } from "react";
 import * as styles from "./tossPayment.css";
+import { UserType } from "@/app/types/UserType";
+import { assignInlineVars } from "@vanilla-extract/dynamic";
+import {
+  loadWidget,
+  tossPaymentRequest,
+} from "@/app/lib/utils/payments/tossPaymentRequset";
 
-export default function TossPayment({ price }: { price: number }) {
+interface TossPaymentProps {
+  price: number;
+  userInfo: UserType;
+  itemName: string;
+  setShowTossPayment: React.Dispatch<React.SetStateAction<boolean>>;
+}
+
+export default function TossPayment({
+  price,
+  userInfo,
+  itemName,
+  setShowTossPayment,
+}: TossPaymentProps) {
   const paymentWidgetRef = useRef<PaymentWidgetInstance | null>();
+  const paymentMethodsWidgetRef = useRef<ReturnType<
+    PaymentWidgetInstance["renderPaymentMethods"]
+  > | null>(null);
+  const [paymentMethodsWidgetReady, isPaymentMethodsWidgetReady] =
+    useState<boolean>(false);
+
+  /**
+   *  결제 요청 클릭
+   */
+  const handlePurchaseClick = () => {
+    tossPaymentRequest({ itemName, paymentWidgetRef, userInfo });
+  };
 
   useEffect(() => {
     (async () => {
-      const paymentWidget = await loadPaymentWidget(
-        "test_ck_ma60RZblrqyqRM905labrwzYWBn1",
-        ANONYMOUS
-      ); // 비회원 customerKey
+      const paymentWidget = await loadWidget();
 
       if (paymentWidgetRef.current == null) {
         paymentWidgetRef.current = paymentWidget;
       }
 
-      /**
-       * 결제창을 렌더링합니다.
-       * @docs https://docs.tosspayments.com/reference/widget-sdk#renderpaymentmethods%EC%84%A0%ED%83%9D%EC%9E%90-%EA%B2%B0%EC%A0%9C-%EA%B8%88%EC%95%A1
-       */
-      const paymentMethodsWidget =
-        paymentWidgetRef.current.renderPaymentMethods(
-          "#payment-method",
-          { value: price },
-          { variantKey: "DEFAULT" }
-        );
+      const paymentMethodsWidget = paymentWidget.renderPaymentMethods(
+        "#payment-methods",
+        { value: price },
+        { variantKey: "DEFAULT" }
+      );
+
+      paymentWidget.renderAgreement("#agreement", {
+        variantKey: "AGREEMENT",
+      });
+
+      paymentMethodsWidget.on("ready", () => {
+        paymentMethodsWidgetRef.current = paymentMethodsWidget;
+        isPaymentMethodsWidgetReady(true);
+      });
     })();
   }, []);
+
   return (
-    <div className={styles.tossPaymentFrame}>
-      <div>
-        <div id="payment-method" />
-      </div>
-    </div>
+    <section className={styles.tossPaymentBackground}>
+      <section
+        className={styles.tossPaymentFrame}
+        style={{ display: paymentMethodsWidgetRef.current ? "block" : "none" }}>
+        <div id="payment-methods" />
+        <div id="agreement" />
+        <button onClick={() => setShowTossPayment(false)}>X</button>
+        <button
+          onClick={handlePurchaseClick}
+          style={assignInlineVars({
+            display: paymentMethodsWidgetReady ? "block" : "none",
+          })}>
+          결제하기
+        </button>
+      </section>
+    </section>
   );
 }

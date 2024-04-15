@@ -27,6 +27,14 @@ export const flex = recipe({
         flexDirection: "column",
       },
     },
+    wrap: {
+      nowrap: {
+        flexWrap: "nowrap",
+      },
+      wrap: {
+        flexWrap: "wrap",
+      },
+    },
   },
 });
 
@@ -54,6 +62,36 @@ export const font = recipe({
       },
       xLarge: {
         fontSize: vars.font.size.xLarge,
+      },
+    },
+  },
+});
+
+export const boxSize = recipe({
+  variants: {
+    width: {
+      small: {
+        width: 100,
+      },
+      medium: {
+        width: 170,
+      },
+      large: {
+        width: 250,
+      },
+      full: {
+        width: "100%",
+      },
+    },
+    height: {
+      small: {
+        height: 40,
+      },
+      meidum: {
+        height: 70,
+      },
+      large: {
+        height: 100,
       },
     },
   },

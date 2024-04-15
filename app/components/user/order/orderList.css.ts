@@ -5,3 +5,8 @@ export const orderListFrame = style({
   width: "100%",
   height: 50,
 });
+
+export const orderListItem = style({
+  display: "flex",
+  flexDirection: "row",
+});

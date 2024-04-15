@@ -46,7 +46,7 @@ globalStyle("a", {
 
 globalStyle("input", {
   margin: 0,
-  padding: 0,
+  padding: "0 0 0 10px",
   border: 0,
   boxSizing: "border-box",
 });

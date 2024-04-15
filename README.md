@@ -1,36 +1,33 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+## 현재 진행 상황
 
-## Getting Started
+- 회원 가입
+- 상품 등록
+  - user role(admin 만 가능하도록)
+  - image crop
+  - quill 에디터 사용
+- 상품 목록 조회
+- 상품 장바구니(wihslist) 담기
+- 상품 장바구니 -> 결제 진행
+  - 장바구니(wishlist) 와 결제진행(orderInProgress) collections 따로 관리
+  - 장바구니에서 결제 진행할 시 상품들을 결제 진행 collections으로 옮긴다.
+- 토스 페이먼츠 연동
+  - 무결성 확인
+    - DB의 orderInProgress의 총 가격과 쿼리 파라미터로 받은 가격 비교
+  - 결제진행(orderInProgress) collections 에서 발송예정(prepareShipping) collections 으로 옮긴다.
 
-First, run the development server:
+## 남은 작업
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
-
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
-
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
-
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+- 결제 에러 핸들링
+  - 결제 진행 중 jwt가 만료되면?
+    - 리프레시 토큰
+  - 결제 진행 중 에러 핸들링 케이스 처리가 필요할까?
+    - 잔액부족
+    - 결제 방식에 따른 에러(통신사 에러, 카드 점검...)
+- 결제 시 사용자의 정보(이름, 전화번호, 주소)를 매번 업데이트하는게 맞을까?
+  - 주소 목록을 따로 관리하는 방법이 있지만 필요한 기능일까 고민
+- 유저의 주문 목록 확인
+  - 발송 대기와 발송 완료를 따로 처리해야할까?
+    - 같이 처리하게 된다면 택배사 API를 이용해서 렌더링 마다 요청을 보내야함
+- 어드민의 주문 목록 확인
+  - orderComplete collection으로 따로 관리하는게 맞을 것 같다.
+- 어드민의 유저의 주문 목록 확인

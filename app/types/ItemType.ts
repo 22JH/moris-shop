@@ -8,5 +8,6 @@ export interface ItemType {
   price: number;
   category: string;
   contents: string;
+  trackingNumber?: string;
   createdAt?: Date;
 }

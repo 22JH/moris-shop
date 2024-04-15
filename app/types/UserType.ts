@@ -2,7 +2,7 @@ import type { ItemType } from "./ItemType";
 import type { ObjectId } from "mongoose";
 
 export interface UserType {
-  id?: ObjectId;
+  _id?: ObjectId;
   email?: string;
   name?: string;
   phone?: string;

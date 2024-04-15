@@ -1,4 +1,4 @@
-import mongoose, { ObjectId } from "mongoose";
+import mongoose from "mongoose";
 
 const userSchema = new mongoose.Schema({
   id: {
@@ -19,20 +19,24 @@ const userSchema = new mongoose.Schema({
     type: String,
     default: "user",
   },
+  postCode: {
+    type: String,
+  },
   address: {
     type: String,
   },
-  /**
-   *  장바구니 : {
-   *    item : 아이템 정보,
-   *    isOrderPending : 주문 진행사항까지 갔는지
-   *  }
-   */
+  addressDetail: {
+    type: String,
+  },
   wishList: {
     type: [mongoose.Schema.Types.ObjectId],
     ref: "Item",
   },
   orderInProgress: {
+    type: [mongoose.Schema.Types.ObjectId],
+    ref: "Item",
+  },
+  orderComplate: {
     type: [mongoose.Schema.Types.ObjectId],
     ref: "Item",
   },
