@@ -3,12 +3,11 @@
 import { redirect } from "next/navigation";
 import { connectToDB } from "../../mongoose";
 import { authOptions } from "../../utils/authOptions";
-import { getServerSession } from "next-auth";
-import User from "../../models/user.model";
+import { type Session, getServerSession } from "next-auth";
 import type { UserType } from "@/app/types/UserType";
+import User from "../../models/user.model";
 import Item from "../../models/item.model";
 import PrepareShipping from "../../models/prepareShipping.model";
-import { connect } from "http2";
 import mongoose from "mongoose";
 
 /** 유저의 주문 진행(결제하기) 상태의 리스트 */
@@ -35,34 +34,30 @@ export async function getOrderInProgressList(): Promise<UserType | undefined> {
     throw new Error(`주문 목록 가져오기 실패 : ${err}`);
   }
 }
-/** 무통장 입금시 */
-export async function addPreOrders() {
+
+/** 무결성 체크를 위해 주문 목록 총 금액 리턴 */
+export async function getOrderInProgressTotalPrice(userSession: Session) {
   try {
-    connectToDB();
+    const res = (await User.findOne({ email: userSession?.user.email })
+      .populate("orderInProgress", {
+        price: 1,
+      })
+      .lean()
+      .exec()) as UserType;
+
+    const totalPrice = res.orderInProgress?.reduce((price, item) => {
+      return price + item.price;
+    }, 0);
+
+    return totalPrice;
   } catch (err) {
-    throw new Error(`결제 실패 : ${err}`);
+    alert("결제에 실패했습니다. 다시 시도해 주세요");
+    return redirect("/order/fail");
   }
 }
 
-/** 무결성 체크를 위해 주문 목록 총 금액 리턴 */
-export async function getOrderInProgressTotalPrice() {
-  const userSession = await getServerSession(authOptions);
-  const res = (await User.findOne({ email: userSession?.user.email })
-    .populate("orderInProgress", {
-      price: 1,
-    })
-    .lean()
-    .exec()) as UserType;
-
-  const totalPrice = res.orderInProgress?.reduce((price, item) => {
-    return price + item.price;
-  }, 0);
-
-  return totalPrice;
-}
-
 /** 결제 완료 후 아이템 상태 변경 및 결제 완료 colllection 추가 함수 */
-export async function changeItemStatus() {
+export async function changeItemStatus(amount: string) {
   const session = await mongoose.startSession(); // 세션 시작
   session.startTransaction(); // 트랜잭션 시작
   try {
@@ -74,12 +69,28 @@ export async function changeItemStatus() {
       .session(session)
       .lean()
       .exec()) as UserType;
+    const { name, phone, email, postCode, address, addressDetail } = user;
     const itemIds = user.orderInProgress;
 
+    const prepareShipping = new PrepareShipping({
+      item: itemIds,
+      amount,
+      name,
+      phone,
+      email,
+      postCode,
+      address,
+      addressDetail,
+    });
+
+    /**
+     * create 메서드와 session을 쓰려면 첫번째 인자를 배열로 보내야함.
+     * 이 때 인자들이 전달이 안되는 상황 발생(collections은 정상적으로 생성)
+     * 따라서 mongoose 가 아닌 mongodb메서드로 생성하고 session을 인자로전달한다.
+     */
+    const prepareRes = await prepareShipping.save({ session });
+
     await Promise.all([
-      ...itemIds!.map((itemId) =>
-        PrepareShipping.create([{ item: itemId }], { session })
-      ),
       Item.updateMany(
         { _id: { $in: itemIds } },
         { $set: { soldOut: true } },
@@ -89,7 +100,8 @@ export async function changeItemStatus() {
         { email: userEmail },
         {
           $set: { orderInProgress: [] },
-          $push: { orderComplete: { $each: itemIds } },
+          $pullAll: { wishList: itemIds },
+          $push: { orderComplete: prepareRes._id },
         },
         { session }
       ),
@@ -98,7 +110,8 @@ export async function changeItemStatus() {
     await session.commitTransaction(); // 트랜잭션 커밋
   } catch (err) {
     await session.abortTransaction(); // 트랜잭션 롤백
-    throw new Error(`결제 승인 후 item 상태 변경 실패 : ${err}`);
+    console.error(err);
+    return redirect("/order/fail");
   } finally {
     session.endSession(); // 세션 종료
   }

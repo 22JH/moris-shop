@@ -1,44 +1,29 @@
 "use client";
 
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useSearchParams } from "next/navigation";
-import {
-  checkIntegrity,
-  tossPaymentApprove,
-} from "@/app/lib/utils/payments/tossPaymentRequset";
+import { useRouter } from "next/navigation";
+import { tossPaymentApprove } from "@/app/lib/utils/payments/tossPaymentRequset";
 import { changeItemStatus } from "@/app/lib/actions/userAction/order.actions";
 
 export default function Success() {
+  const [isSuccess, setIsSuccess] = useState<boolean>(false);
   const searchParams = useSearchParams();
-
+  const router = useRouter();
   const orderId = searchParams.get("orderId");
   const paymentKey = searchParams.get("paymentKey");
   const amount = searchParams.get("amount");
 
   useEffect(() => {
+    if (!orderId || !paymentKey || !amount) return router.push("/order/fail");
     (async () => {
-      if (!orderId || !paymentKey || !amount) return;
-      /** 무결성 체크 */
-      if (!(await checkIntegrity(Number(amount)))) return;
-      try {
-        const result = await tossPaymentApprove({
-          paymentKey,
-          amount,
-          orderId,
-        });
-
-        /** 결제 성공 */
-        if (result.status === "DONE") {
-          await changeItemStatus();
-        }
-      } catch (err) {
-        console.log(err);
-      }
+      await tossPaymentApprove({
+        paymentKey,
+        amount,
+        orderId,
+      });
+      setIsSuccess(true);
     })();
   }, []);
-  return (
-    <>
-      <>결제 성공</>
-    </>
-  );
+  return <>{isSuccess ? <p>결제 성공</p> : <p>결제 승인 중</p>}</>;
 }

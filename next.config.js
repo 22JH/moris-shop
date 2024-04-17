@@ -17,7 +17,6 @@ const nextConfig = {
     ],
     formats: ["image/avif", "image/webp"],
   },
-  transpilePackages: ["three"],
   webpack: (config, { isServer }) => {
     const fileLoaderRule = config.module.rules.find((rule) =>
       rule.test?.test?.(".svg")

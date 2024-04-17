@@ -1,4 +1,5 @@
-import type { ObjectId, Date } from "mongoose";
+import type { ObjectId } from "mongoose";
+import { UserType } from "./UserType";
 
 export interface ItemType {
   _id?: ObjectId;
@@ -8,6 +9,12 @@ export interface ItemType {
   price: number;
   category: string;
   contents: string;
-  trackingNumber?: string;
-  createdAt?: Date;
+  createdAt?: string;
+  soldOut?: boolean;
+}
+
+export interface ShippingItemType extends UserType {
+  item: ItemType[];
+  amount: string;
+  trackingNumber: string;
 }

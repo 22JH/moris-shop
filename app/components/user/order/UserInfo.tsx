@@ -31,7 +31,6 @@ export default function UserInfo({ userInfo, setUserInfo }: UserInfoProps) {
     if (key === "phone") value = formatPhoneNumber(value) || "";
     setUserInfo((prev) => ({ ...prev, [key]: value }));
   };
-  console.log(1);
   const handleSaveDefault = async () => {
     if (validateUserInfo(userInfo)) await updateUser(userInfo);
   };

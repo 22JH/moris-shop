@@ -50,3 +50,10 @@ globalStyle("input", {
   border: 0,
   boxSizing: "border-box",
 });
+globalStyle("input:focus", {
+  outline: "none",
+});
+
+globalStyle("input:read-only", {
+  color: "grey",
+});

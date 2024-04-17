@@ -21,7 +21,6 @@ export default function order() {
       else setUserInfo(user);
     })();
   }, []);
-
   if (!userInfo || !userInfo.orderInProgress) return <></>;
 
   return (

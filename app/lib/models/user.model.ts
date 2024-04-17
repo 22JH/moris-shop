@@ -36,9 +36,9 @@ const userSchema = new mongoose.Schema({
     type: [mongoose.Schema.Types.ObjectId],
     ref: "Item",
   },
-  orderComplate: {
+  orderComplete: {
     type: [mongoose.Schema.Types.ObjectId],
-    ref: "Item",
+    ref: "PrepareShipping",
   },
 });
 

@@ -13,10 +13,10 @@ export default function Payment({ userInfo }: PaymentProps) {
   const [showTossPayment, setShowTossPayment] = useState<boolean>(false);
 
   const items = userInfo.orderInProgress!;
+
   const totalPrice = items.reduce((price, item) => {
     return price + item.price;
   }, 0);
-
   const itemName =
     items.length > 1
       ? `${items![0].title} 외 ${items.length - 1}개`

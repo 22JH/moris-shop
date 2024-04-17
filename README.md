@@ -31,3 +31,25 @@
 - 어드민의 주문 목록 확인
   - orderComplete collection으로 따로 관리하는게 맞을 것 같다.
 - 어드민의 유저의 주문 목록 확인
+
+## 고민
+
+- user가 결제를 성공하면?
+
+  - orderInProgress 삭제
+  - orderComplete 추가
+  - admin이 확인할 prepareShipping에 상품 추가
+  - 유저가 결제한 상품과 트래킹넘버 확인하려면?
+    - orderComplete에 tracking number을 추가?
+      - order은 Item을 참조하고 있어서 tracking number model을 추가하려면 객체로 만들어야 할건데 그러면 depth가 깊어져 클라이언트 코드가 길어질듯
+    - 아니면 prepareShipping을 참조하도록 수정?
+      - Promise.all로 한 번에 하고있는데 orderComplete collections에 추가하는 것을 따로 빼서 마지막에 하도록해야함
+      - 이게 맞는듯, 생각해보니 네이버 쇼핑도 tracking Number이 있나 없나에 따라 발송 완료를 체크했음
+
+- user가 결제에 실패하면?
+  - 결제 승인 단계에서 실패
+    - 결제가 이루어지지 않았으니 fail 페이지로 리다이렉트
+  - 승인 성공, DB 문제로 실패하면?
+    - DB 업데이트는 session으로 롤백시키면 됨. 하지만 이미 결제 승인이 났기때문에 실 결제가 이루어짐.
+    - 결제 취소말고 확인하는 방법이 없을까
+    - 결제 승인을 하기 전에 DB 에러를 체크해야할까?

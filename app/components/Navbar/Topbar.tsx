@@ -5,6 +5,7 @@ import { useState } from "react";
 import NavbarIcon from "../../assets/icon/NavbarIcon";
 import LeftSidebar from "./LeftSidebar";
 import CartIcon from "@/app/assets/icon/CartIcon";
+import Link from "next/link";
 
 export default function Topbar() {
   const [clickedNavbar, setClickedNavbar] = useState<boolean>(false);
@@ -12,6 +13,7 @@ export default function Topbar() {
   const handleClickedNavbar = () => {
     setClickedNavbar((prev) => !prev);
   };
+
   return (
     <>
       <div className={styles.TopbarContainer}>
@@ -20,7 +22,9 @@ export default function Topbar() {
           clickedNavbar={clickedNavbar}
         />
         <div className={styles.icon}>아이콘</div>
-        <CartIcon />
+        <Link href="/wishlist">
+          <CartIcon />
+        </Link>
       </div>
       <LeftSidebar
         handleClickedNavbar={handleClickedNavbar}

@@ -45,6 +45,7 @@ export async function getItemByCategory({
     if (category === "ALL") {
       const itemsPromise = (await Item.find({})
         .skip(skipAmount)
+        .sort({ _id: -1 })
         .lean()
         .exec()) as ItemType[];
 
@@ -59,6 +60,7 @@ export async function getItemByCategory({
     } else {
       const itemsPromise = (await Item.find({ category })
         .skip(skipAmount)
+        .sort({ _id: -1 })
         .lean()
         .exec()) as ItemType[];
       const totalPostPromise = Item.countDocuments().lean();

@@ -6,6 +6,8 @@ import {
 } from "@tosspayments/payment-widget-sdk";
 import { nanoid } from "nanoid";
 import { getOrderInProgressTotalPrice } from "../../actions/userAction/order.actions";
+import { redirect } from "next/navigation";
+import type { Session } from "next-auth";
 
 interface TossPaymentRequestProps {
   paymentKey: string;
@@ -31,7 +33,9 @@ export const loadWidget = async () => {
   );
 };
 
-/** 결제 요청 */
+/**
+ * 결제 요청
+ */
 export const tossPaymentRequest = async ({
   itemName,
   paymentWidgetRef,
@@ -50,14 +54,6 @@ export const tossPaymentRequest = async ({
   } catch (error) {
     console.log(error);
   }
-};
-
-/** 무결성 체크 */
-export const checkIntegrity = async (amount: number) => {
-  const totalPrice = await getOrderInProgressTotalPrice();
-  console.log(totalPrice, amount);
-  if (totalPrice === amount) return true;
-  else return false;
 };
 
 /** 결제 승인 */
@@ -85,11 +81,11 @@ export const tossPaymentApprove = async ({
       }
     );
 
-    if (!res.ok) throw new Error(`API 요청 실패: 상태 코드 ${res.status}`);
+    if (!res.ok) throw new Error("결제 실패");
 
     const payment = await res.json();
     return payment;
   } catch (err) {
-    throw new Error(`결제 승인 실패 : ${err}`);
+    return redirect("order/fail");
   }
 };

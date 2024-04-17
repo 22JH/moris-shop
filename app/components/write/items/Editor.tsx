@@ -17,7 +17,7 @@ export default function Editor() {
   );
   const [title, setTitle] = useState<string>("");
   const [description, setDescription] = useState<string>("");
-  const [category, setCategory] = useState<string>("");
+  const [category, setCategory] = useState<string>("OUTER");
   const [price, setPrice] = useState<number>(0);
   const [contents, setContents] = useState<string>("");
 

@@ -10,6 +10,9 @@ import { UserType } from "@/app/types/UserType";
 import { ItemType } from "@/app/types/ItemType";
 import "../../models/item.model";
 
+/**
+ * 장바구니 추가
+ */
 export async function addWishList(item: ObjectId) {
   try {
     connectToDB();
@@ -27,6 +30,9 @@ export async function addWishList(item: ObjectId) {
   }
 }
 
+/**
+ * 장바구니 목록 가져오기
+ */
 export async function getWishList(): Promise<ItemType[] | undefined> {
   try {
     connectToDB();
@@ -43,6 +49,7 @@ export async function getWishList(): Promise<ItemType[] | undefined> {
         category: 1,
       }) // 'wishList' 필드를 populate하여 Item의 상세 정보를 가져옴
       .select("wishList")
+      .sort({ _id: -1 })
       .lean()
       .exec()) as UserType;
     return res.wishList;
@@ -52,6 +59,9 @@ export async function getWishList(): Promise<ItemType[] | undefined> {
   }
 }
 
+/**
+ * 장바구니에서 결제 진행 시 해당 아이템을 orderInProgress collection으로 옮긴다
+ */
 export async function changeWihsListItemPending(items: ObjectId[]) {
   try {
     connectToDB();
