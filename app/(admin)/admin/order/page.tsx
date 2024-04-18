@@ -4,6 +4,7 @@ import { flex, boxSize } from "@/app/style/common/common.css";
 
 export default async function Orders() {
   const orders = await getAllOrderedItems();
+
   return (
     <section
       className={`${flex({ justify: "center" })} ${boxSize({

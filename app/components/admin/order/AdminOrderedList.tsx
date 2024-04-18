@@ -29,26 +29,39 @@ export default function AdminOrderedList({
       header: "가격",
       cell: (info) => info.getValue(),
     }),
+    columnHelper.accessor("address", {
+      header: "주소",
+      cell: (info) => info.getValue(),
+    }),
+    columnHelper.accessor("addressDetail", {
+      header: "상세 주소",
+      cell: (info) => info.getValue(),
+    }),
+    columnHelper.accessor("phone", {
+      header: "전화 번호",
+      cell: (info) => info.getValue(),
+    }),
     columnHelper.accessor("trackingNumber", {
       header: "운송장 번호",
-      cell: (info) =>
-        info.getValue() ? info.getValue() : <input type="text" />,
+      cell: (info) => (info.getValue() ? <p>발송 완료</p> : <p>발송 대기</p>),
     }),
     columnHelper.accessor("_id", {
-      header: "자세히보기",
+      header: "",
       cell: (info) => (
         <Link href={`/admin/order/detail/${info.getValue()}`}>자세히 보기</Link>
       ),
     }),
   ];
+
   const table = useReactTable({
     data: orders,
     columns,
     debugTable: true,
     getCoreRowModel: getCoreRowModel(),
   });
+
   return (
-    <>
+    <div style={{ overflow: "scroll" }}>
       <table>
         <thead>
           {table.getHeaderGroups().map((headerGroup) => (
@@ -67,17 +80,24 @@ export default function AdminOrderedList({
           ))}
         </thead>
         <tbody>
-          {table.getRowModel().rows.map((row) => (
-            <tr key={row.id}>
-              {row.getVisibleCells().map((cell) => (
-                <td id={cell.id}>
-                  {flexRender(cell.column.columnDef.cell, cell.getContext())}
-                </td>
-              ))}
-            </tr>
-          ))}
+          {table.getRowModel().rows.map((row) => {
+            return (
+              <tr key={row.id}>
+                {row.getVisibleCells().map((cell) => {
+                  return (
+                    <td key={cell.id}>
+                      {flexRender(
+                        cell.column.columnDef.cell,
+                        cell.getContext()
+                      )}
+                    </td>
+                  );
+                })}
+              </tr>
+            );
+          })}
         </tbody>
       </table>
-    </>
+    </div>
   );
 }
