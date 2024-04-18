@@ -12,10 +12,22 @@ export const tossPaymentBackground = style({
 
 export const tossPaymentFrame = style({
   position: "absolute",
+  display: "flex",
+  flexDirection: "row",
   top: "50%",
   left: "50%",
   transform: "translate(-50%, -50%)",
   width: "60%",
   maxWidth: 600,
   minWidth: 350,
+});
+
+export const tossPaymentCancleBtnStyle = style({
+  flex: 1,
+  height: 50,
+});
+
+export const tossPaymentConfirmBtnStyle = style({
+  flex: 5,
+  height: 50,
 });

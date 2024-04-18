@@ -7,18 +7,19 @@ import {
   loadWidget,
   tossPaymentRequest,
 } from "@/app/lib/utils/payments/tossPaymentRequset";
+import { boxSize, flex } from "@/app/style/common/common.css";
 
 interface TossPaymentProps {
   price: number;
   userInfo: UserType;
-  itemName: string;
+  orderName: string;
   setShowTossPayment: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 export default function TossPayment({
   price,
   userInfo,
-  itemName,
+  orderName,
   setShowTossPayment,
 }: TossPaymentProps) {
   const paymentWidgetRef = useRef<PaymentWidgetInstance | null>();
@@ -32,7 +33,7 @@ export default function TossPayment({
    *  결제 요청 클릭
    */
   const handlePurchaseClick = () => {
-    tossPaymentRequest({ itemName, paymentWidgetRef, userInfo });
+    tossPaymentRequest({ orderName, paymentWidgetRef, userInfo });
   };
 
   useEffect(() => {
@@ -63,18 +64,25 @@ export default function TossPayment({
   return (
     <section className={styles.tossPaymentBackground}>
       <section
-        className={styles.tossPaymentFrame}
-        style={{ display: paymentMethodsWidgetRef.current ? "block" : "none" }}>
+        className={`${styles.tossPaymentFrame} ${boxSize({ width: "full" })}`}
+        style={{ display: paymentMethodsWidgetReady ? "block" : "none" }}>
         <div id="payment-methods" />
         <div id="agreement" />
-        <button onClick={() => setShowTossPayment(false)}>X</button>
-        <button
-          onClick={handlePurchaseClick}
-          style={assignInlineVars({
-            display: paymentMethodsWidgetReady ? "block" : "none",
-          })}>
-          결제하기
-        </button>
+        <section className={flex({ direction: "row" })}>
+          <button
+            onClick={() => setShowTossPayment(false)}
+            className={styles.tossPaymentCancleBtnStyle}>
+            닫기
+          </button>
+          <button
+            onClick={handlePurchaseClick}
+            style={assignInlineVars({
+              display: paymentMethodsWidgetReady ? "block" : "none",
+            })}
+            className={styles.tossPaymentConfirmBtnStyle}>
+            결제하기
+          </button>
+        </section>
       </section>
     </section>
   );

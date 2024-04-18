@@ -7,7 +7,7 @@ import { type Session, getServerSession } from "next-auth";
 import type { UserType } from "@/app/types/UserType";
 import User from "../../models/user.model";
 import Item from "../../models/item.model";
-import PrepareShipping from "../../models/prepareShipping.model";
+import TotalOrders from "../../models/totalOrders.model";
 import mongoose from "mongoose";
 
 /** 유저의 주문 진행(결제하기) 상태의 리스트 */
@@ -57,7 +57,7 @@ export async function getOrderInProgressTotalPrice(userSession: Session) {
 }
 
 /** 결제 완료 후 아이템 상태 변경 및 결제 완료 colllection 추가 함수 */
-export async function changeItemStatus(amount: string) {
+export async function changeItemStatus(amount: string, orderName: string) {
   const session = await mongoose.startSession(); // 세션 시작
   session.startTransaction(); // 트랜잭션 시작
   try {
@@ -72,8 +72,9 @@ export async function changeItemStatus(amount: string) {
     const { name, phone, email, postCode, address, addressDetail } = user;
     const itemIds = user.orderInProgress;
 
-    const prepareShipping = new PrepareShipping({
+    const totalOrders = new TotalOrders({
       item: itemIds,
+      orderName,
       amount,
       name,
       phone,
@@ -88,7 +89,7 @@ export async function changeItemStatus(amount: string) {
      * 이 때 인자들이 전달이 안되는 상황 발생(collections은 정상적으로 생성)
      * 따라서 mongoose 가 아닌 mongodb메서드로 생성하고 session을 인자로전달한다.
      */
-    const prepareRes = await prepareShipping.save({ session });
+    const prepareRes = await totalOrders.save({ session });
 
     await Promise.all([
       Item.updateMany(

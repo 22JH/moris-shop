@@ -17,7 +17,8 @@ export default function order() {
   useEffect(() => {
     (async function () {
       const user = await getOrderInProgressList();
-      if (!user || !user.orderInProgress) router.push("/");
+      if (!user || !user.orderInProgress || user.orderInProgress.length === 0)
+        router.push("/");
       else setUserInfo(user);
     })();
   }, []);

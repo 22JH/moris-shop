@@ -4,7 +4,14 @@ import User from "@/app/lib/models/user.model";
 import { connectToDB } from "@/app/lib/mongoose";
 import { UserType } from "@/app/types/UserType";
 
-export async function createUser({ name, phone, email }: any) {
+export async function getUserByEmail({ email }: UserType): Promise<UserType> {
+  const user: UserType | null = await User.findOne({ email });
+  if (!user) throw new Error("유저를 찾을 수 없습니다.");
+
+  return { _id: user._id!, email: user.email, role: user.role };
+}
+
+export async function createUser({ name, phone, email }: UserType) {
   try {
     connectToDB();
     const isUserExist = await User.findOne({ email });
@@ -25,7 +32,8 @@ export async function updateUser(userInfo: UserType) {
       { $set: { name, phone, email, address, addressDetail, postCode } }
     );
   } catch (err) {
-    console.log(err);
-    alert(`유저 정보 수정에 실패했습니다. 다시 시도해 주세요!`);
+    throw new Error(
+      `유저 정보 수정에 실패했습니다. 다시 시도해 주세요: ${err}`
+    );
   }
 }

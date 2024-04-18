@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 
-const prepareShippingSchema = new mongoose.Schema({
+const totalOrdersSchema = new mongoose.Schema({
   item: [
     {
       type: mongoose.Schema.Types.ObjectId,
@@ -8,6 +8,10 @@ const prepareShippingSchema = new mongoose.Schema({
     },
   ],
   name: {
+    type: String,
+    required: true,
+  },
+  orderName: {
     type: String,
     required: true,
   },
@@ -44,7 +48,7 @@ const prepareShippingSchema = new mongoose.Schema({
   },
 });
 
-const PrepareShipping =
-  mongoose.models.PrepareShipping ||
-  mongoose.model("PrepareShipping", prepareShippingSchema);
-export default PrepareShipping;
+const TotalOrders =
+  mongoose.models.TotalOrders ||
+  mongoose.model("TotalOrders", totalOrdersSchema);
+export default TotalOrders;

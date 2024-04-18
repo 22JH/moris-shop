@@ -3,8 +3,7 @@
 import { useEffect, useState } from "react";
 import { useSearchParams } from "next/navigation";
 import { useRouter } from "next/navigation";
-import { tossPaymentApprove } from "@/app/lib/utils/payments/tossPaymentRequset";
-import { changeItemStatus } from "@/app/lib/actions/userAction/order.actions";
+import { tossPaymentApprove } from "@/app/lib/actions/userAction/tossPayment.actions";
 
 export default function Success() {
   const [isSuccess, setIsSuccess] = useState<boolean>(false);

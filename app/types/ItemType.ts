@@ -17,4 +17,5 @@ export interface ShippingItemType extends UserType {
   item: ItemType[];
   amount: string;
   trackingNumber: string;
+  orderName: string;
 }

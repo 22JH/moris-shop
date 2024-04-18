@@ -4,7 +4,7 @@ export const connectToDB = async () => {
   if (process.env.NODE_ENV !== "production") {
     mongoose.set("debug", true);
   }
-  if (!process.env.MONGODB_URI) return console.log("몽고DB URI 없음");
+  if (!process.env.MONGODB_URI) throw new Error("몽고DB URI 없음");
 
   if (mongoose.connection.readyState !== 1) {
     try {

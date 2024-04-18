@@ -17,7 +17,7 @@ export default function Payment({ userInfo }: PaymentProps) {
   const totalPrice = items.reduce((price, item) => {
     return price + item.price;
   }, 0);
-  const itemName =
+  const orderName =
     items.length > 1
       ? `${items![0].title} 외 ${items.length - 1}개`
       : items![0].title;
@@ -32,7 +32,7 @@ export default function Payment({ userInfo }: PaymentProps) {
     <>
       <section className={styles.paymentFrame}>
         <section className={flex({ direction: "col" })}>
-          <p>{itemName}</p>
+          <p>{orderName}</p>
           <p>{totalPrice.toLocaleString("ko-kr")}원</p>
           <button onClick={handlePaymentClick}>결제하기</button>
         </section>
@@ -40,7 +40,7 @@ export default function Payment({ userInfo }: PaymentProps) {
       {showTossPayment && (
         <TossPayment
           price={totalPrice}
-          itemName={itemName}
+          orderName={orderName}
           userInfo={userInfo}
           setShowTossPayment={setShowTossPayment}
         />

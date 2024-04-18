@@ -10,5 +10,6 @@ export interface UserType {
   addressDetail?: string;
   postCode?: string;
   wishList?: ItemType[];
+  role?: string;
   orderInProgress?: ItemType[];
 }

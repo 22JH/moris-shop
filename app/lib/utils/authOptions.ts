@@ -3,7 +3,10 @@ import { AuthOptions } from "next-auth";
 import KakaoProvider from "next-auth/providers/kakao";
 import GoogleProvider from "next-auth/providers/google";
 import NaverProvider from "next-auth/providers/naver";
-import { createUser } from "@/app/lib/actions/userAction/signup.action";
+import {
+  createUser,
+  getUserByEmail,
+} from "@/app/lib/actions/userAction/auth.action";
 
 export const authOptions: AuthOptions = {
   providers: [
@@ -26,15 +29,10 @@ export const authOptions: AuthOptions = {
       await createUser(user);
       return true;
     },
-    async jwt({ token, user, profile }: any) {
+    async jwt({ token }: any) {
+      const user = await getUserByEmail({ email: token.email });
       if (user) {
-        token.user = {};
-        token.user.name = user?.name;
-        token.user.email = user?.email;
-        token.user.id = user?.id;
-        if (user.email === "toitoii080@nate.com" || user.role == "admin") {
-          token.user.role = "admin";
-        }
+        token.user = user;
       }
       return token;
     },

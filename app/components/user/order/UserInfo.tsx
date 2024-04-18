@@ -7,7 +7,7 @@ import { boxSize, flex } from "@/app/style/common/common.css";
 import * as styles from "./userInfo.css";
 import { formatPhoneNumber } from "@/app/lib/utils/formatPhoneNumber";
 import { validateUserInfo } from "@/app/lib/utils/payments/validateUserInfo";
-import { updateUser } from "@/app/lib/actions/userAction/signup.action";
+import { updateUser } from "@/app/lib/actions/userAction/auth.action";
 
 interface UserInfoProps {
   userInfo: UserType;

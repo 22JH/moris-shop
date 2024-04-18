@@ -14,6 +14,8 @@
   - 무결성 확인
     - DB의 orderInProgress의 총 가격과 쿼리 파라미터로 받은 가격 비교
   - 결제진행(orderInProgress) collections 에서 발송예정(prepareShipping) collections 으로 옮긴다.
+  - 결제 승인이 되면 user의 orderComplete에 prepareShipping을 참조하는 id 추가
+    - prepareShipping에는 유저가 산 item목록(item collections 참조) tracking number + userType
 
 ## 남은 작업
 
@@ -47,9 +49,17 @@
       - 이게 맞는듯, 생각해보니 네이버 쇼핑도 tracking Number이 있나 없나에 따라 발송 완료를 체크했음
 
 - user가 결제에 실패하면?
+
   - 결제 승인 단계에서 실패
     - 결제가 이루어지지 않았으니 fail 페이지로 리다이렉트
   - 승인 성공, DB 문제로 실패하면?
     - DB 업데이트는 session으로 롤백시키면 됨. 하지만 이미 결제 승인이 났기때문에 실 결제가 이루어짐.
     - 결제 취소말고 확인하는 방법이 없을까
     - 결제 승인을 하기 전에 DB 에러를 체크해야할까?
+
+- user가 결제 도중 해당 상품이 품절이되면?
+  - 결제 승인 전 해당 DB에서 상품을 한 번 더 체크 해야할듯
+  - 무결성을 체크할 때 user의 orderInProgress를 체크하고있다. 여기에 soldOut 프로퍼티를 체크하는 로직을 넣을까?
+    - 근데 그러면 함수의 의존성이 늘어나는데 괜찮을까?
+    - 무결성을 체크하는 함수를 다른곳에서 사용할까?
+      - 현재 계획에서 사용할 곳이 없으니 일단 추가하고 나중에 생기면 함수를 분리시키자
