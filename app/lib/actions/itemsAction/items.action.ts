@@ -35,46 +35,38 @@ export async function createItem({
 export async function getItemByCategory({
   category,
   pageNumber,
-}: GetItemType): Promise<{ items: ItemType[]; totalPost: number }> {
+}: GetItemType): Promise<{ items: ItemType[]; totalPost: number; totalPage: number }> {
+  const pageSize = Number(process.env.NEXT_PUBLIC_PAGE_SIZE) || 2;
+  const skipAmount = (pageNumber - 1) * pageSize;
+
   try {
-    connectToDB();
-    const skipAmount =
-      (pageNumber - 1) * Number(process.env.NEXT_PUBLIC_PAGE_SIZE);
+    await connectToDB();
 
-    /** 카테고리가 ALL일 경우 모두 가져오기 */
-    if (category === "ALL") {
-      const itemsPromise = (await Item.find({})
-        .skip(skipAmount)
-        .sort({ _id: -1 })
-        .lean()
-        .exec()) as ItemType[];
-
-      const totalPostPromise = Item.countDocuments().lean();
-
-      const [items, totalPost] = await Promise.all([
-        itemsPromise,
-        totalPostPromise,
-      ]);
-
-      return { items, totalPost };
-    } else {
-      const itemsPromise = (await Item.find({ category })
-        .skip(skipAmount)
-        .sort({ _id: -1 })
-        .lean()
-        .exec()) as ItemType[];
-      const totalPostPromise = Item.countDocuments().lean();
-
-      const [items, totalPost] = await Promise.all([
-        itemsPromise,
-        totalPostPromise,
-      ]);
-      return { items, totalPost };
+    let query = {};
+    if (category !== "ALL") {
+      query = { category };
     }
+
+    const itemsPromise = await (Item.find(query)
+      .skip(skipAmount)
+      .limit(pageSize)
+      .sort({ _id: -1 })
+      .lean()) as ItemType[];
+
+    const totalPostPromise = await Item.countDocuments(query).lean();
+
+    const [items , totalPost] = await Promise.all([itemsPromise, totalPostPromise]);
+
+    // 전체 페이지 수를 계산
+    const totalPage = Math.ceil(totalPost / pageSize);
+
+    return { items , totalPost, totalPage };
   } catch (err) {
-    throw new Error(`아이템 리스트 가져오기 실패 ${err}`);
+    // 에러 처리
+    throw new Error(`아이템 리스트 가져오기 실패: ${err}`);
   }
 }
+
 
 export async function getItem({ id }: { id: string }): Promise<ItemType> {
   try {

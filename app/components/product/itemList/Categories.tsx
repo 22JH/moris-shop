@@ -1,24 +1,34 @@
+"use client";
+
 import { menus } from "@/app/constants/menus";
-import { assignInlineVars } from "@vanilla-extract/dynamic";
 import * as styles from "./categories.css";
 import Link from "next/link";
+import { useRef, useState } from "react";
+import { useIntersectionObserver } from "@/app/lib/hooks/useIntersectionObserver";
 
 interface CateogriesProps {
   currentCategory: string;
 }
 
 export default function Categories({ currentCategory }: CateogriesProps) {
+  const { setTarget, isObserved } = useIntersectionObserver();
   return (
-    <section className={styles.categoriesFrame}>
+    <section
+      className={`${!isObserved && styles.stuckOnTopStyle} ${
+        styles.categoriesFrame
+      }`}
+      ref={setTarget}
+    >
       {menus.map((menu) => {
-        const active = currentCategory === menu.category;
+        const isActive = currentCategory === menu.category;
         return (
           <Link
             href={menu.url}
             key={menu.category}
-            style={assignInlineVars({
-              color: active ? "yellow" : "black",
-            })}>
+            className={`${isActive && styles.activeButton} ${
+              styles.categoryItem
+            }`}
+          >
             {menu.category}
           </Link>
         );

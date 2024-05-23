@@ -1,29 +1,27 @@
-import { vars } from "@/app/style/theme.css";
 import { style } from "@vanilla-extract/css";
 
 export const itemsListFrame = style({
-  // border: "1px solid black",
-  display: "flex",
-  flexWrap: "wrap",
-  justifyContent: "center",
+  display: "grid",
+  "@media": {
+    "(max-width: 750px)": {
+      gridTemplateColumns: "1fr 1fr 1fr"
+    },
+    "(max-width: 480px)": {
+      gridTemplateColumns: "1fr 1fr"
+    },
+  },
+  gridTemplateColumns: "1fr 1fr 1fr 1fr",
   padding: "0 10px",
   marginTop: 20,
   columnGap: 20,
-  rowGap: 30,
+  rowGap: 20,
 });
 
 export const itemFrame = style({
-  display: "flex",
-  flexDirection: "column",
-  flexBasis: "calc(25% - 20px)",
-  "@media": {
-    "(max-width: 750px)": {
-      flexBasis: "calc(33% - 20px)",
-    },
-    "(max-width: 480px)": {
-      flexBasis: "calc(49% - 20px)",
-    },
-  },
+  border: "2px solid black",
+  boxShadow: "4px 4px 0px 0px rgba(0,0,0,0.95)",
+  WebkitBoxShadow: "4px 4px 0px 0px rgba(0,0,0,0.95)",
+  borderRadius: 4,
 });
 
 export const itemImage = style({
@@ -33,6 +31,10 @@ export const itemImage = style({
   border: "1px solid grey",
   marginBottom: 5,
 });
+
+export const itemInfo = style({
+  padding: "5px 10px"
+})
 
 export const itemTitle = style({
   fontSize: 14,

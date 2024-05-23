@@ -1,15 +1,22 @@
 import { vars } from "@/app/style/theme.css";
 import * as styles from "./CartIcon.css";
 import { assignInlineVars } from "@vanilla-extract/dynamic";
+import { usePathname } from "next/navigation";
 
 export default function CartIcon() {
+  const pathname = usePathname();
+  const isWishListPage = pathname.includes("wishlist");
+  console.log(isWishListPage);
   return (
     <div className={styles.cartIconContainer}>
       <svg
-        className={styles.svgStyle}
+        className={`${isWishListPage && styles.activeButton} ${
+          styles.svgStyle
+        }`}
         viewBox="0 0 24 24"
         fill="none"
-        xmlns="http://www.w3.org/2000/svg">
+        xmlns="http://www.w3.org/2000/svg"
+      >
         <path
           d="M10 13.25C10.4142 13.25 10.75 13.5858 10.75 14V16C10.75 16.4142 10.4142 16.75 10 16.75C9.58579 16.75 9.25 16.4142 9.25 16V14C9.25 13.5858 9.58579 13.25 10 13.25Z"
           style={assignInlineVars({ fill: vars.backgroundColor.pointColor })}

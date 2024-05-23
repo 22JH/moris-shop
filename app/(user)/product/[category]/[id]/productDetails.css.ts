@@ -5,6 +5,7 @@ export const productDetailFrame = style({
   flexDirection: "column",
   rowGap: 20,
   padding: "0 15px",
+  marginBottom: 100
 });
 
 export const hrStyle = style({

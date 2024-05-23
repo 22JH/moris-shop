@@ -1,4 +1,4 @@
-import type { ItemType } from "./ItemType";
+import type { ItemType, ShippingItemType } from "./ItemType";
 import type { ObjectId } from "mongoose";
 
 export interface UserType {
@@ -12,4 +12,5 @@ export interface UserType {
   wishList?: ItemType[];
   role?: string;
   orderInProgress?: ItemType[];
+  orderComplete?: ShippingItemType[]
 }

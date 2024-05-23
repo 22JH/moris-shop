@@ -7,8 +7,10 @@ import { type Session, getServerSession } from "next-auth";
 import type { UserType } from "@/app/types/UserType";
 import User from "../../models/user.model";
 import Item from "../../models/item.model";
+import "../../models/totalOrders.model"
 import TotalOrders from "../../models/totalOrders.model";
 import mongoose from "mongoose";
+import { ShippingItemType } from "@/app/types/ItemType";
 
 /** 유저의 주문 진행(결제하기) 상태의 리스트 */
 export async function getOrderInProgressList(): Promise<UserType | undefined> {
@@ -115,5 +117,26 @@ export async function changeItemStatus(amount: string, orderName: string) {
     return redirect("/order/fail");
   } finally {
     session.endSession(); // 세션 종료
+  }
+}
+
+export async function getOrderedItems() {
+  try {
+    await connectToDB()
+    const userSession = await getServerSession(authOptions);
+    const userEmail = userSession?.user.email;
+    if (!userEmail) throw new Error("사용자 세션이 유효하지 않습니다.");
+
+  const res = await User.findOne({ email: userEmail }).populate({
+    path: 'orderComplete',
+    populate: {
+      path: 'item',
+      model: 'Item' // 'Item'은 item 문서의 모델 이름입니다.
+    }
+  })
+  .select('orderComplete') as UserType;
+    return res.orderComplete
+   } catch (err) {
+    throw new Error(`유저 주문 목록 가져오기 실패 : ${err}`)
   }
 }

@@ -7,17 +7,29 @@ export const flex = recipe({
   },
   variants: {
     justify: {
+      start: {
+        justifyContent: "flex-start"
+      },
       center: {
         justifyContent: "center",
       },
       between: {
         justifyContent: "space-between",
       },
+      end: {
+        justifyContent: "flex-end"
+      }
     },
     align: {
+      start: {
+        alignItems: "flex-start"
+      },
       center: {
         alignItems: "center",
       },
+      end: {
+        alignItems: "flex-end"
+      }
     },
     direction: {
       row: {
@@ -35,6 +47,11 @@ export const flex = recipe({
         flexWrap: "wrap",
       },
     },
+    flex: {
+      1: {
+        flex: 1
+      },
+    }
   },
 });
 
@@ -63,6 +80,23 @@ export const font = recipe({
         fontSize: vars.font.size.xLarge,
       },
     },
+    weight: {
+      500: {
+        fontWeight: 500
+      },
+      600: {
+        fontWeight: 600
+      },
+      700: {
+        fontWeight: 700
+      },
+      800: {
+        fontWeight: 800
+      },
+      900: {
+        fontWeight: 900
+      },
+    }
   },
 });
 
